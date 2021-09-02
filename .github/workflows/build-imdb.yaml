@@ -1,0 +1,45 @@
+name: Docker Image Build
+
+on:
+  push:
+    branches:
+      - main
+
+    paths-ignore:
+    - '.devcontainer/**'
+    - 'docs/**'
+    - '**.md'
+
+    tags:
+      - v*
+
+jobs:
+
+  docker-build-push:
+
+    runs-on: ubuntu-latest
+    env:
+      REPO: "https://ghcr.io/cse-labs/imdb-import:latest"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GHCR_ID }}
+        password: ${{ secrets.GHCR_PAT }}
+
+    - name: Docker Pull
+      run: |
+        # Pull the latest image if needed
+        # This doesn't have to be a separate step, but makes the output easier to read and debug
+        docker pull mcr.microsoft.com/dotnet/core/sdk:3.1
+        docker pull mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+
+    - name: Docker Build
+      run: docker build . -t $REPO
+
+    - name: Docker Push
+      run: docker push $REPO
