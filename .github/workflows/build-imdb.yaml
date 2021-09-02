@@ -19,7 +19,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      REPO: "https://ghcr.io/cse-labs/imdb-import:latest"
+      REPO: "ghcr.io/cse-labs/imdb-import:latest"
 
     steps:
     - uses: actions/checkout@v2
