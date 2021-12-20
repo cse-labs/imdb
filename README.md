@@ -112,7 +112,7 @@ az cosmosdb sql container create -p /partitionKey -g $Imdb_RG -a $Imdb_Name -d $
 ```bash
 
 # run the IMDb Import app from Docker
-docker run -it --rm ghcr.io/acr-labs/imdb-import $Imdb_Name $(eval $Imdb_RW_Key) $Imdb_DB $Imdb_Col
+docker run -it --rm ghcr.io/cse-labs/imdb-import $Imdb_Name $(eval $Imdb_RW_Key) $Imdb_DB $Imdb_Col
 
 ```
 
